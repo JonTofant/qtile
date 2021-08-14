@@ -1,0 +1,4 @@
+variety&
+nm-applet&
+picom
+
