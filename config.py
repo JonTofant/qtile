@@ -132,8 +132,14 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-def open_rofi(qtile):
+def open_rofi():
     qtile.cmd_spawn('rofi -show drun')
+
+def shutdown_computer():
+    qtile.cmd_spawn('shutdown now')
+
+def logout_computer():
+    lazy.shutdown()
 
 screens = [
     Screen(
@@ -162,13 +168,16 @@ screens = [
                 widget.TextBox('|'),
                 widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
                 widget.TextBox('|'),
-                widget.TextBox('', 
-                mouse_callbacks={'Button1': open_rofi}
+                widget.TextBox('', 
+                mouse_callbacks={'Button1': logout_computer}
+                ),
+                widget.TextBox('⏻', 
+                mouse_callbacks={'Button1': shutdown_computer}
                 ),
                 widget.Spacer(length = 20,),
             ],
             24,
-            margin = [10,20,0,20],
+            #margin = [10,20,0,20],
             opacity = 0.6,
         ),
     ),
@@ -210,6 +219,7 @@ def autostart():
     processes = [
         ['nm-applet'],
         ['picom'],
+        ['nitrogen --restore'],
     ]
 
     for p in processes:
